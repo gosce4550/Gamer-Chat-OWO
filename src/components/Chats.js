@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ChatEngine } from 'react-chat-engine';
 import { auth } from '../firebase';
+import image from '../4550_-_Logo_Design.png';
 
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
@@ -66,8 +67,12 @@ const Chats = () => {
     return (
         <div className = "chats-page">
             <div className = "nav-bar">
+                <div className = "image-holder">
+                        <img style={{height:66, witdh:66}}
+                        src= {image} alt="Social Name"/> 
+                    </div> 
                 <div className = "logo-tab">
-                    GamersOWO
+                    Posted
                 </div>
                 <div onClick={handleLogOut} className = "logout-tab">
                     Logout
