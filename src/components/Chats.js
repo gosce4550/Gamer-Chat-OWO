@@ -6,6 +6,8 @@ import image from '../4550_-_Logo_Design.png';
 
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
+
+import { PeopleSettings } from 'react-chat-engine';
 const Chats = () => {
     const history = useHistory();
     const { user } = useAuth();
@@ -65,6 +67,7 @@ const Chats = () => {
     if(!user || loading) return 'Loading...';
 
     return (
+        
         <div className = "chats-page">
             <div className = "nav-bar">
                 <div className = "image-holder">
@@ -78,13 +81,15 @@ const Chats = () => {
                     Logout
                 </div>
             </div>
-
             <ChatEngine
                 height = "calc(100vh - 66px)"
                 projectID = {process.env.REACT_APP_CHAT_ENGINE_ID}
                 userName = {user.email}
                 userSecret = {user.uid}
+                offset={-8}
             />
+
+            
         </div>   
     );
 }
