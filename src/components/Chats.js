@@ -16,8 +16,9 @@ const Chats = () => {
     
     const handleLogOut = async () => {
         await auth.signOut();
-
+        sessionStorage.clear();
         history.push('/');
+        
     }
 
     const getFile = async (url) => {
@@ -29,15 +30,17 @@ const Chats = () => {
 
     useEffect(() => {
         if(!user){
+            sessionStorage.clear();
             history.push('/');
-
+            
             return;
         }
 
         axios.get('https://api.chatengine.io/users/me', {
             headers: {
                 "project-id": process.env.REACT_APP_CHAT_ENGINE_ID,
-                "user-name": user.email, 
+                "user-name": user.displayName,
+                //"user-email": user.email, 
                 "user-secret": user.uid,
             }
         })
@@ -46,8 +49,9 @@ const Chats = () => {
         })
         .catch(() => {
             let formdata = new FormData();
+            formdata.append('username', user.displayName);
             formdata.append('email', user.email);
-            formdata.append('username', user.email);
+            
             formdata.append('secret', user.uid);
 
             getFile(user.photoURL)
@@ -77,14 +81,15 @@ const Chats = () => {
                 <div className = "logo-tab">
                     Posted
                 </div>
-                <div onClick={handleLogOut} className = "logout-tab">
+                <div onClick={handleLogOut} className = "logout-tab" >
                     Logout
                 </div>
             </div>
             <ChatEngine
                 height = "calc(100vh - 66px)"
                 projectID = {process.env.REACT_APP_CHAT_ENGINE_ID}
-                userName = {user.email}
+                userName = {user.displayName}
+                //userEmail = {user.email}
                 userSecret = {user.uid}
                 offset={-8}
             />
